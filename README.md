@@ -11,5 +11,5 @@ I document my methodology, tools used, and thought process.
 ## Categories Covered
 - Forensics
 - Networking
-- 
+ 
 I am actively improving my offensive and defensive security skills
