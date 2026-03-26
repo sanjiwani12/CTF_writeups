@@ -1,1 +1,30 @@
+Deleted File
 
+Here is a summary of the Challenge,
+
+Statement
+Your cousin found a USB drive in the library this morning. He’s not very good with computers, so he’s hoping you can find the owner of this stick!
+
+The flag is the owner’s identity in the form firstname_lastname
+
+So, after downloading the file ch39.gz, I ran a command to unzip the file followed by other commands below:
+
+-> gunzip ch39.gz
+-> ls
+-> file ch39
+-> tar -xvf ch39
+
+It was an usb.image file
+
+then i used foremost tool
+
+-> foremost -i usb.image -o recovered_file
+-> cd Recovered_file
+
+Recovered_file had a author.txt file and png directory, I viewed the details in auther.txt file using cat command then opened png directory then ran following commands.
+
+then i changed directory to png
+
+then used exiftool
+
+It showed the name of auther of the file, which I formatted as per the challenge's requirements. Hence the challenge is solved.
