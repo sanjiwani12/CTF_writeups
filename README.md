@@ -7,6 +7,7 @@ I document my methodology, tools used, and thought process.
 
 ## Platforms
 - picoCTF
+- root-me
 
 ## Categories Covered
 - Forensics
