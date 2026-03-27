@@ -1,30 +1,74 @@
-Deleted File
+# 🔍 CTF Write-up: Deleted File Challenge
 
-Here is a summary of the Challenge,
+## 📌 Challenge Description
 
-Statement
+**Statement:**
+
 Your cousin found a USB drive in the library this morning. He’s not very good with computers, so he’s hoping you can find the owner of this stick!
 
-The flag is the owner’s identity in the form firstname_lastname
+**Goal:**  
+Recover the owner’s identity in the format: `firstname_lastname`.
 
-So, after downloading the file ch39.gz, I ran a command to unzip the file followed by other commands below:
+**Provided:**  
+- File: `ch39.gz`
 
--> gunzip ch39.gz
--> ls
--> file ch39
--> tar -xvf ch39
+---
 
-It was an usb.image file
+## 📥 Initial Steps
 
-then i used foremost tool
+First, I downloaded the provided file and uncompressed it:
 
--> foremost -i usb.image -o recovered_file
--> cd Recovered_file
+```bash
+gunzip ch39.gz
+ls
+file ch39
+The file command revealed it was a tar archive inside an image file. I extracted it:
 
-Recovered_file had a author.txt file and png directory, I viewed the details in auther.txt file using cat command then opened png directory then ran following commands.
+tar -xvf ch39
+This produced usb.image.
 
-then i changed directory to png
+🛠️ File Recovery
+To recover deleted files from the image, I used foremost:
 
-then used exiftool
+foremost -i usb.image -o recovered_file
+cd recovered_file
+After the recovery, the directory contained:
 
-It showed the name of auther of the file, which I formatted as per the challenge's requirements. Hence the challenge is solved.
+author.txt
+
+png/ directory with images
+
+📂 Inspecting Recovered Data
+I first checked the text file:
+
+cat author.txt
+This gave initial clues about the owner.
+
+Next, I inspected the images in the png/ directory using exiftool:
+
+cd png
+exiftool *.png
+The metadata revealed the author’s name.
+
+🔓 Recovering the Flag
+From the metadata in exiftool, I extracted the owner’s name.
+After formatting it according to the challenge requirements (firstname_lastname), the flag was obtained.
+
+🏁 Flag
+firstname_lastname
+🧠 Key Takeaways
+Disk images can contain hidden or deleted files recoverable with tools like foremost.
+
+Metadata in images often contains author information — always check with exiftool.
+
+Properly analyzing recovered files can reveal sensitive information even if the files were “deleted.”
+
+🧰 Tools Used
+gunzip / tar
+
+foremost
+
+cat
+
+exiftool
+
