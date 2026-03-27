@@ -1,0 +1,78 @@
+# 🔐 CTF Write-up: Acropalypse KeePass Challenge
+
+## 📌 Challenge Description
+
+**Statement:**
+
+An employee has lost his KeePass password. He couldn’t remember it and couldn’t find his password file. After hours of searching, it turns out that he had sent a screenshot of his passwords to one of his colleagues, but it’s still nowhere to be found.
+
+He’s asking for your help to recover it.
+
+**Given:**
+- `chal42.zip`
+- SHA256: `028c8561f087da873b08968d55141dcfc8f10a47e787f79c35b2da611a5e07ce`
+
+---
+
+## 📥 Initial Steps
+
+First, I downloaded and extracted the provided zip file:
+
+```bash
+unzip chal42.zip
+ls -l
+This revealed two files:
+
+Capture.png
+
+Database.kdbx
+
+🖼️ Image Analysis
+I opened the image:
+
+xdg-open Capture.png
+The image appeared to be a screenshot of an Excel file containing several passwords. However, none of them seemed useful at first glance.
+
+Upon closer inspection, I noticed a partial letter "K" on the middle-right side of the image. This seemed unusual and hinted that something might have been cropped out.
+
+This led me to suspect that the image might be vulnerable to Acropalypse (a vulnerability where cropped images still contain recoverable data).
+
+🛠️ Exploiting Acropalypse
+To test this, I used the Acropalypse Multi-Tool GUI:
+
+👉 https://github.com/frankthetank-music/Acropalypse-Multi-Tool
+
+After loading Capture.png into the tool, I was able to recover additional hidden image data that had been cropped out.
+
+🔍 Recovered Data
+The recovered portion revealed a hidden password:
+
+-=b9w9h^+j%\x-rMPUqv9Vv`@X%*=a
+This confirmed that the image had indeed been improperly cropped and still contained sensitive information.
+
+🔓 Accessing KeePass Database
+Next, I used the recovered password to open the KeePass database:
+
+File: Database.kdbx
+
+Password: (recovered from image)
+
+After successfully unlocking the database, I was able to retrieve the flag.
+
+🏁 Flag
+
+🧠 Key Takeaways
+Cropping an image does not always remove the underlying data
+
+The Acropalypse vulnerability can expose sensitive information from improperly edited images
+
+Always properly sanitize or re-save images before sharing them
+
+🧰 Tools Used
+unzip
+
+xdg-open
+
+Acropalypse Multi-Tool
+
+KeePass
